@@ -1,0 +1,128 @@
+QMainWindow, QWidget {
+    background: #1A1A2E;
+    color: #E0E0E0;
+    font-family: "Segoe UI", "Roboto", "Arial", sans-serif;
+    font-size: 14px;
+}
+
+QLabel {
+    color: #E0E0E0;
+}
+
+QLabel#launcherTitle {
+    font-size: 38px;
+    font-weight: bold;
+    color: #ffc0cbff;
+    padding: 20px 0;
+    qproperty-alignment: AlignCenter;
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #0F0F23, stop:1 #1A1A2E);
+    border-bottom: 2px solid #33334A;
+    margin-bottom: 15px;
+}
+
+QWidget#detailPanel {
+    background-color: #28283A;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 20px;
+    border: 1px solid #3A3A4A;
+}
+
+QLabel#detailTitle {
+    font-size: 30px;
+    font-weight: bold;
+    color: #8CFF00;
+    margin-bottom: 15px;
+    qproperty-alignment: AlignCenter;
+}
+
+QLabel#detailText {
+    font-size: 16px;
+    color: #B0B0C0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+QLabel {
+    border: 1px solid #33334A;
+    border-radius: 8px;
+    background-color: #28283A;
+    qproperty-alignment: AlignCenter;
+}
+
+QScrollArea {
+    background: transparent;
+    border: none;
+}
+
+QScrollArea > QWidget > QWidget {
+    background: transparent;
+}
+
+QPushButton {
+    background-color: #007BFF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    outline: none;
+    border: 1px solid transparent;
+}
+
+QPushButton:hover {
+    background-color: #0056B3;
+    border: 1px solid #0056B3;
+}
+
+QPushButton:pressed {
+    background-color: #003F80;
+    border: 1px solid #003F80;
+}
+
+QPushButton#backButton {
+    background-color: #6C757D;
+}
+
+QPushButton#backButton:hover {
+    background-color: #545B62;
+    border: 1px solid #545B62;
+}
+
+QPushButton#backButton:pressed {
+    background-color: #494F55;
+    border: 1px solid #494F55;
+}
+
+QScrollBar:vertical, QScrollBar:horizontal {
+    border: none;
+    background: #28283A;
+    width: 12px;
+    height: 12px;
+    margin: 0px;
+    border-radius: 6px;
+}
+
+QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
+    background: #55556B;
+    border-radius: 6px;
+    min-height: 30px;
+    min-width: 30px;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    border: none;
+    background: none;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical,
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+    background: none;
+}
+
+QLabel#detailCoverLabel {
+    border: 2px solid #4CAF50;
+    border-radius: 10px;
+}
