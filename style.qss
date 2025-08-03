@@ -1,0 +1,99 @@
+/* style.qss */
+
+QMainWindow {
+    background-color: #2e2e2e; 
+    color: #e0e0e0; 
+}
+
+QWidget {
+    background-color: #2e2e2e;
+    color: #e0e0e0;
+    font-family: "Segoe UI", "Helvetica Neue", sans-serif; 
+    font-size: 14px;
+}
+
+QPushButton {
+    background-color: #007acc; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px; 
+    font-weight: bold;
+    min-height: 30px; 
+}
+
+QPushButton:hover {
+    background-color: #0066a3; 
+}
+
+QPushButton:pressed {
+    background-color: #005580; 
+}
+
+QLabel {
+    color: #e0e0e0;
+}
+
+QTableWidget {
+    background-color: #3c3c3c; 
+    alternate-background-color: #4a4a4a; 
+    color: #e0e0e0;
+    border: 1px solid #5a5a5a;
+    gridline-color: #5a5a5a;
+    selection-background-color: #007acc; 
+    selection-color: white; 
+    border-radius: 5px; 
+    padding: 5px; 
+}
+
+QHeaderView::section {
+    background-color: #4c4c4c;
+    color: #e0e0e0;
+    padding: 5px;
+    border: 1px solid #5a5a5a;
+    font-weight: bold;
+}
+
+QTableWidget::item {
+    padding: 5px;
+}
+
+QScrollBar:vertical {
+    border: 1px solid #4a4a4a;
+    background: #3c3c3c;
+    width: 10px;
+    margin: 15px 0 15px 0;
+    border-radius: 5px;
+}
+QScrollBar::handle:vertical {
+    background: #5a5a5a;
+    min-height: 20px;
+    border-radius: 4px;
+}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    border: none;
+    background: none;
+}
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+}
+
+QScrollBar:horizontal {
+    border: 1px solid #4a4a4a;
+    background: #3c3c3c;
+    height: 10px;
+    margin: 0 15px 0 15px;
+    border-radius: 5px;
+}
+QScrollBar::handle:horizontal {
+    background: #5a5a5a;
+    min-width: 20px;
+    border-radius: 4px;
+}
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    border: none;
+    background: none;
+}
+QScrollBar::add-page:horizontal, QScrollBar::sub-page:horizontal {
+    background: none;
+}
