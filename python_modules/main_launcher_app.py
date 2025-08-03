@@ -1,5 +1,6 @@
 import sys
 import requests
+import os
 from PIL import Image
 from io import BytesIO
 
@@ -13,6 +14,7 @@ from PyQt6.QtGui import QDesktopServices, QPixmap, QMouseEvent
 from pathlib import Path
 
 from parser import find_all_potential_steamapps_folders, parse_acf_file
+from db_manager import get_db_manager
 
 class GameLauncherApp(QMainWindow):
     def __init__(self):
@@ -32,6 +34,12 @@ class GameLauncherApp(QMainWindow):
         self.setCentralWidget(self.central_widget)
         self.main_layout = QVBoxLayout()
         self.central_widget.setLayout(self.main_layout)
+
+        self.db_manager = get_db_manager()
+
+        self.covers_dir = Path.home() / ".EchoGL" / "covers"
+        self.covers_dir.mkdir(parents=True, exist_ok=True)
+        print(f"Covers will be stored in: {self.covers_dit}")
 
         self.scan_button = QPushButton("Scan Steam Games")
         self.scan_button.clicked.connect(self.scan_games)
