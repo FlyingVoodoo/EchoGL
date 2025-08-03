@@ -21,3 +21,6 @@ Thumbs.db
 # Logs and databases
 *.log
 *.db
+
+build/
+*.txt
