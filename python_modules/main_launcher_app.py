@@ -39,7 +39,7 @@ class GameLauncherApp(QMainWindow):
 
         self.covers_dir = Path.home() / ".EchoGL" / "covers"
         self.covers_dir.mkdir(parents=True, exist_ok=True)
-        print(f"Covers will be stored in: {self.covers_dit}")
+        print(f"Covers will be stored in: {self.covers_dir}")
 
         self.scan_button = QPushButton("Scan Steam Games")
         self.scan_button.clicked.connect(self.scan_games)
@@ -126,16 +126,24 @@ class GameLauncherApp(QMainWindow):
                     else:
                         game_info['full_install_path'] = 'N/A - Not Found'
 
+                    thumbnail_path = self.download_and_save_cover(appid, 'thumbnail')
+                    detail_path = self.download_and_save_cover(appid, 'detail')
+                    
+                    game_info['cover_thumbnail_path'] = str(thumbnail_path) if thumbnail_path else None
+                    game_info['cover_detail_path'] = str(detail_path) if detail_path else None
+
+                    self.db_manager.add_or_update_game(game_info)
                     found_games.append(game_info)
                     
-        if not found_games:
+        all_current_games_from_db = self.db_manager.get_all_games() 
+        if not all_current_games_from_db:
             no_games_label = QLabel("No Steam games found.")
             no_games_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
             self.scroll_layout.addWidget(no_games_label)
             print("No Steam games found.")
             return
         
-        for game in found_games:
+        for game in all_current_games_from_db:
             cover_label = QLabel()
             cover_label.setFixedSize(180, 270)
             cover_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -147,7 +155,7 @@ class GameLauncherApp(QMainWindow):
             cover_label.installEventFilter(self)
 
             self.scroll_layout.addWidget(cover_label)
-            self.display_cover_on_label(game.get('appid'), cover_label, cover_type='thumbnail')
+            self.display_cover_on_label(game.get('appid'), cover_label, cover_type='thumbnail', use_cached=True)
 
         self.scroll_layout.addStretch()
         print(f"Found {len(found_games)} Steam games.")
@@ -241,6 +249,49 @@ class GameLauncherApp(QMainWindow):
         
         self.stacked_widget.setCurrentWidget(self.game_details_page)
         self.back_button.show()
+
+    def download_and_save_cover(self, appid, cover_type, image_data=None):
+        if cover_type == 'thumbnail':
+            cover_urls_to_try = [
+                f"https://cdn.akamai.steamstatic.com/steam/apps/{appid}/library_600x900.jpg",
+                f"https://cdn.akamai.steamstatic.com/steam/apps/{appid}/capsule_231x87.jpg",
+            ]
+            local_filename = f"{appid}_thumbnail.jpg"
+        elif cover_type == 'detail':
+            cover_urls_to_try = [
+                f"https://cdn.akamai.steamstatic.com/steam/apps/{appid}/library_hero.jpg",
+                f"https://steamcdn-a.akamaihd.net/steam/apps/{appid}/header.jpg",
+            ]
+            local_filename = f"{appid}_detail.jpg"
+        else:
+            print(f"WARNING: Unknown cover_type '{cover_type}' for AppID {appid}. Not saving.")
+            return None
+
+        local_path = self.covers_dir / local_filename
+
+        if local_path.is_file():
+            return local_path
+
+        if image_data is None:
+            for cover_url in cover_urls_to_try:
+                try:
+                    response = requests.get(cover_url, stream=True, timeout=5) 
+                    response.raise_for_status()
+                    image_data = response.content
+                    break
+                except requests.exceptions.RequestException as e:
+                    pass
+            if image_data is None:
+                print(f"ERROR: Failed to download cover for AppID {appid} ({cover_type}) after all attempts.")
+                return None
+
+        try:
+            img = Image.open(BytesIO(image_data))
+            img.save(local_path)
+            print(f"Cover for AppID {appid} ({cover_type}) saved to {local_path}")
+        except Exception as e:
+            print(f"ERROR: Could not save cover for AppID {appid} ({cover_type}) to {local_path}: {e}")
+            return None
 
     def launch_game_from_details(self):
         if self.selected_game_info and self.selected_game_info.get('appid'):
