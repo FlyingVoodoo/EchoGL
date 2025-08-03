@@ -8,7 +8,7 @@ class DBManager:
         self.db_path.parent.mkdir(parents=True, exist_ok=True)
 
         self.conn = None
-        self.connect()
+        self._connect()
         self._create_table()
 
     def _connect(self):
