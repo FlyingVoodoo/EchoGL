@@ -22,5 +22,7 @@ Thumbs.db
 *.log
 *.db
 
+main.go
+
 build/
 *.txt
