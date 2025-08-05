@@ -46,7 +46,7 @@ class GameDetailsPage(QWidget):
         
         self.detail_game_name_label.setText(game_info.get('name', 'N/A'))
         self.detail_info_label.setText(f"AppID: {game_info.get('appid', 'N/A')}\n"
-                                         f"Install Path: {game_info.get('full_install_path', 'N/A')}\n"
+                                         f"Install Path: {game_info.get('install_path', 'N/A')}\n"
                                          f"Some future ML data or description goes here...")
         
         self.detail_launch_button.setEnabled(bool(self._current_appid)) 

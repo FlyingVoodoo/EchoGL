@@ -8,6 +8,7 @@ import os
 from core.steam_scanner import find_all_potential_steamapps_folders, parse_acf_file
 from core.cover_downloader import CoverDownloader
 from data.db_manager import get_db_manager
+from utils.metadata_updater import update_all_games_with_metadata
 
 class GameManager(QObject):
     scan_started = pyqtSignal()
@@ -25,7 +26,7 @@ class GameManager(QObject):
 
     def scan_for_games(self):
         self.scan_started.emit()
-        print("Начато сканирование игр...")
+        print("Games scanning starts...")
 
         all_steamapps_folders = find_all_potential_steamapps_folders()
         
@@ -54,7 +55,11 @@ class GameManager(QObject):
         
         all_current_games_from_db = self.db_manager.get_all_games()
         self.scan_finished.emit(all_current_games_from_db)
-        print("Сканирование игр завершено.")
+        print("Scaning is finished.")
+
+        print("Starting updating metadata and covers with IGDB...")
+        update_all_games_with_metadata()
+        print("Metadate's update is finished")
 
     def get_all_games(self):
         return self.db_manager.get_all_games()
@@ -98,7 +103,7 @@ class GameManager(QObject):
         
         if pixmap_to_display.isNull():
             downloaded_path = self.cover_downloader.download_and_save_cover(appid, cover_type)
-            if downloaded_path and downloaded_path.is_file():
+            if downloaded_path and Path(downloaded_path).is_file():
                 try:
                     loaded_pixmap = QPixmap(str(downloaded_path))
                     if not loaded_pixmap.isNull():
