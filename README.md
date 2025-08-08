@@ -38,7 +38,6 @@
     ```sh
     pip install -r requirements.txt
     ```
-    *(Необходимо создать `requirements.txt` в корневой папке с зависимостями: `PyQt6`, `requests`, `Pillow`, `python-dotenv` и т.д.)*
 3.  **Настройка API-ключей:**
     Создайте файл `.env` в корневой папке проекта (`EchoGL/`) и добавьте ваши ключи:
     ```
@@ -51,7 +50,7 @@
     ```
 
 ## Структура проекта
-
+```
 EchoGL/                 # Корневая директория проекта
 ├── go_modules/         # Модули, написанные на Go (находятся в планах)
 │   └── steam_scanner/  # Go-модуль для сканирования Steam
@@ -83,7 +82,7 @@ EchoGL/                 # Корневая директория проекта
 ├── README.md           # Этот файл
 ├── requirements.txt    # Список зависимостей Python
 └── ...
-
+```
 ## Участие в проекте
 
 Проект с открытым исходным кодом, и мы будем рады любой помощи. Если у вас есть желание внести свой вклад, или вы нашли ошибку, пожалуйста, создавайте [Issue](https://github.com/FlyingVoodoo/EchoGL/issues) или [Pull Request](https://github.com/FlyingVoodoo/EchoGL/pulls) на GitHub.
