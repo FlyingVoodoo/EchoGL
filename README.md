@@ -35,20 +35,31 @@
 
 1.  **Клонирование репозитория:**
     ```sh
-    git clone [https://github.com/FlyingVoodoo/EchoGL.git](https://github.com/FlyingVoodoo/EchoGL.git)
+    git clone https://github.com/FlyingVoodoo/EchoGL.git
     cd EchoGL
     ```
-2.  **Установка зависимостей:**
+2.  **Создание и активация виртуального окружения:**
+    * **На Windows:**
+    ```sh
+    python -m venv venv
+    venv\Scripts\activate
+    ```
+    * **На macOS и Linux:**
+    ```sh
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+3.  **Установка зависимостей:**
     ```sh
     pip install -r requirements.txt
     ```
-3.  **Настройка API-ключей:**
+4.  **Настройка API-ключей:**
     Создайте файл `.env` в корневой папке проекта (`EchoGL/`) и добавьте ваши ключи:
     ```
     TWITCH_CLIENT_ID=your_client_id
     TWITCH_CLIENT_SECRET=your_client_secret
     ```
-4.  **Запуск лаунчера:**
+5.  **Запуск лаунчера:**
     ```sh
     python python_modules/main.py
     ```
