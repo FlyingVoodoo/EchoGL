@@ -7,7 +7,6 @@ from PyQt6.QtGui import QDesktopServices
 
 from pathlib import Path
 
-# Импортируем из наших новых модулей
 from ui.animated_widgets import AnimatedStackedWidget
 from ui.game_list_page import GameListPage
 from ui.game_details_page import GameDetailsPage
@@ -17,7 +16,7 @@ class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.setWindowTitle("Unified Game Launcher")
+        self.setWindowTitle("EchoGL")
         self.setGeometry(100, 100, 1200, 800)
 
         style_file = Path(__file__).parent.parent / "assets" / "style.qss"
