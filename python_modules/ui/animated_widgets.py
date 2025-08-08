@@ -189,30 +189,25 @@ class AnimatedCoverLabel(QLabel):
         if self._original_pixmap.isNull():
             super().setPixmap(QPixmap())
             return
-            # Создаем новый QPixmap для буфера, такого же размера как виджет
-    # и заполняем его прозрачным цветом
+
         new_pixmap = QPixmap(self.size())
         new_pixmap.fill(Qt.GlobalColor.transparent)
 
-        # Создаем QPainter для рисования на буфере
         painter = QPainter(new_pixmap)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
 
-        # Масштабируем оригинальное изображение под текущий размер метки
         scaled_pixmap = self._original_pixmap.scaled(self.size(),
                                                     Qt.AspectRatioMode.KeepAspectRatioByExpanding,
                                                     Qt.TransformationMode.SmoothTransformation)
 
-        # Рассчитываем позицию для центрирования изображения
         x = (self.width() - scaled_pixmap.width()) / 2
         y = (self.height() - scaled_pixmap.height()) / 2
 
-        # Рисуем масштабированное изображение на буфере
-        painter.drawPixmap(int(x), int(y), scaled_pixmap)
-        painter.end() # Важно явно закрыть painter после использования!
 
-        # Устанавливаем буферизированное изображение в метку
+        painter.drawPixmap(int(x), int(y), scaled_pixmap)
+        painter.end()
+
         super().setPixmap(new_pixmap)
 
     def resizeEvent(self, event):
