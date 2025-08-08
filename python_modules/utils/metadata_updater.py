@@ -34,7 +34,7 @@ def update_all_games_with_metadata():
 
                 print(f"Fetching IGDB info for '{game_name}'...")
 
-                igdb_data_list = get_igdb_game_info(access_token, client_id, game['name'] )
+                igdb_data_list = get_igdb_game_info(access_token, client_id, game['appid'] )
 
                 print(f"Finished fetching IGDB info for '{game_name}'.")
 
