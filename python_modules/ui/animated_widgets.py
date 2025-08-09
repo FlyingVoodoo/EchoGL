@@ -4,11 +4,13 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import (
     Qt, QPropertyAnimation, QEasingCurve, QSize,
-    pyqtProperty, QTimer, QEvent 
+    pyqtProperty, QTimer, QEvent, pyqtSignal
 )
 from PyQt6.QtGui import QPixmap, QColor, QPainter
 
 class AnimatedStackedWidget(QStackedWidget):
+    animation_finished = pyqtSignal()
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self._fade_duration = 350
@@ -47,6 +49,9 @@ class AnimatedStackedWidget(QStackedWidget):
             super().setCurrentIndex(index)
             return
 
+        self._disable_child_effects(old_widget)
+        self._disable_child_effects(new_widget)
+
         self._is_animating = True
         self._target_index = index
 
@@ -84,6 +89,14 @@ class AnimatedStackedWidget(QStackedWidget):
         
         self._out_animation.start()
 
+    def _disable_child_effects(self, widget):
+        if not widget:
+            return
+
+        for child in widget.findChildren(object):
+            if hasattr(child, 'graphicsEffect') and child.graphicsEffect():
+                child.graphicsEffect().setEnabled(False)
+
     def _on_out_animation_finished_and_switch(self):
         try:
             self._out_animation.finished.disconnect(self._on_out_animation_finished_and_switch)
@@ -107,6 +120,8 @@ class AnimatedStackedWidget(QStackedWidget):
         self._current_in_widget = None
         self._is_animating = False
         self._target_index = -1
+
+        self.animation_finished.emit()
 
     def setCurrentWidget(self, widget):
         index = self.indexOf(widget)
@@ -159,6 +174,19 @@ class AnimatedCoverLabel(QLabel):
                 self.animate_tile_scale(1.0)
                 self.animate_glow(0)
         return super().eventFilter(obj, event)
+    
+    def setEnabled(self, enabled):
+        super().setEnabled(enabled)
+        if not enabled:
+            if self._size_animation.state() == QPropertyAnimation.State.Running:
+                self._size_animation.stop()
+            if self.glow_animation.state() == QPropertyAnimation.State.Running:
+                self.glow_animation.stop()
+            if self.shadow_effect:
+                self.shadow_effect.setEnabled(False)
+        else:
+            if self.shadow_effect:
+                self.shadow_effect.setEnabled(True)
 
     def animate_tile_scale(self, factor):
         if self._size_animation.state() == QPropertyAnimation.State.Running:

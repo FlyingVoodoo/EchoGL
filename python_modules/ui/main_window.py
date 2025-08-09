@@ -93,7 +93,18 @@ class MainWindow(QMainWindow):
     def _go_back_to_game_list(self):
         self.stacked_widget.setCurrentWidget(self.game_list_page)
         self.back_button.hide()
-        self.game_details_page.clear_info()
+        # self.game_details_page.clear_info()
+
+        self.game_list_page.scroll_content_widget.adjustSize()
+        self.game_list_page.scroll_layout.update()
+        self.game_list_page.scroll_area.viewport().update()
+
+        QTimer.singleShot(0, self._fix_layout)
+
+    def _fix_layout(self):
+        self.game_list_page.scroll_content_widget.updateGeometry()
+        self.game_list_page.scroll_layout.update()
+        self.game_list_page.scroll_area.updateGeometry()
 
     def closeEvent(self, event):
         self.game_manager.close_db()

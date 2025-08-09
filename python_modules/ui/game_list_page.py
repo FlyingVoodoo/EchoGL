@@ -28,6 +28,11 @@ class GameListPage(QWidget):
         self.scroll_area.viewport().installEventFilter(self)
 
     def display_games(self, games_list: list):
+        for i in range(self.scroll_layout.count()):
+            item = self.scroll_layout.itemAt(i)
+            if item and hasattr(item.widget(), 'setEnabled'):
+                item.widget().setEnabled(False)
+
         while self.scroll_layout.count():
             item = self.scroll_layout.takeAt(0)
             if item.widget():
@@ -51,6 +56,10 @@ class GameListPage(QWidget):
             )
 
         self.scroll_layout.addStretch()
+
+        self.scroll_content_widget.adjustSize()
+        self.scroll_layout.update()
+        self.scroll_area.viewport().update()
 
     def eventFilter(self, obj, event):
         if obj == self.scroll_area.viewport() and event.type() == QEvent.Type.Wheel:
