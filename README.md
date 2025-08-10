@@ -22,7 +22,7 @@ Echo Game Launcher is a cross-platform game launcher for your game library with 
 -   **IGDB Integration**: Fetches and caches comprehensive game metadata (description, genres, platforms) via the IGDB API.
 -   **Dynamic and Animated UI**: An intuitive game gallery with smooth transitions and interactive elements built on PyQt6.
 -   **Local Database**: All game data, metadata, and statistics are stored in a local SQLite database.
--   **Known Issues**: In the current version, on a transition to the details page, the gallery tiles visually shift, accompanied by `QPainter` errors in the console.
+-   **Known Issues**: In the current version, on a transition to the details page, the gallery tiles visually shift, ~~accompanied by `QPainter` errors in the console~~ _UPD: Bug is partly fixed, no more QPainter's errors_.
 
 ### Future Plans
 
